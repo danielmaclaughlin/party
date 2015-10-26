@@ -106,6 +106,11 @@ public class Photo extends DataObject {
 	protected PhotoStatus status = PhotoStatus.VISIBLE;
 	
 	/**
+	 * if the photo has a location, here is the storage for it. The default case is null.
+	 */
+	public Coordinate location = null;
+	
+	/**
 	 *
 	 */
 	protected int praiseSum = 10;
@@ -147,7 +152,7 @@ public class Photo extends DataObject {
 
 		incWriteCount();
 	}
-
+	
 	/**
 	 * @methodtype get
 	 */

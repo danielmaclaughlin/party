@@ -1,5 +1,5 @@
 /**
- * CoordinateTest.java
+ * CartesianCoordinateTest.java
  *
  * Version: 
  *
@@ -10,6 +10,6 @@
 
 package org.wahlzeit.model;
 
-public class CoordinateTest {
+public class CartesianCoordinateTest {
 
 }

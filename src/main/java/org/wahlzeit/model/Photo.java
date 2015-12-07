@@ -31,6 +31,7 @@ import org.wahlzeit.services.DataObject;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.Language;
 import org.wahlzeit.services.ObjectManager;
+import org.wahlzeit.utils.Pattern;
 
 import java.util.Map;
 
@@ -38,6 +39,11 @@ import java.util.Map;
  * A photo represents a user-provided (uploaded) photo.
  */
 @Entity
+@Pattern(name="Abstract Factory",
+ paricipants={
+	 "AbstractProduct", //PhotoFactory
+	 "ConcreteProduct" //this
+ })
 public class Photo extends DataObject {
 
 	/**
@@ -68,65 +74,65 @@ public class Photo extends DataObject {
 	public static final int MAX_THUMB_PHOTO_HEIGHT = 150;
 
 	protected PhotoId id = null;
-	
+
 	/**
 	 *
 	 */
 	protected String ownerId;
-	
+
 	/**
 	 * Each photo can be viewed in different sizes (XS, S, M, L, XL)
 	 * Images are pre-computed in these sizes to optimize bandwidth when requested.
 	 */
 	@Ignore
 	transient protected Map<PhotoSize, Image> images = new ArrayMap<PhotoSize, Image>();
-	
+
 	/**
 	 *
 	 */
 	protected boolean ownerNotifyAboutPraise = false;
 	protected EmailAddress ownerEmailAddress = EmailAddress.EMPTY;
 	protected Language ownerLanguage = Language.ENGLISH;
-	
+
 	/**
 	 *
 	 */
 	protected int width;
 	protected int height;
 	protected PhotoSize maxPhotoSize = PhotoSize.MEDIUM; // derived
-	
+
 	/**
 	 *
 	 */
 	protected Tags tags = Tags.EMPTY_TAGS;
-	
+
 	/**
 	 *
 	 */
 	protected PhotoStatus status = PhotoStatus.VISIBLE;
-	
+
 	/**
 	 * if the photo has a location, here is the storage for it. The default case is null.
 	 */
 	public Coordinate location = null;
-	
+
 	/**
 	 *
 	 */
 	protected int praiseSum = 10;
 	protected int noVotes = 1;
 	protected int noVotesAtLastNotification = 1;
-	
+
 	/**
 	 *
 	 */
 	protected long creationTime = System.currentTimeMillis();
-	
+
 	/**
 	 * The default type is jpg
 	 */
 	protected String ending = "jpg";
-	
+
 	/**
 	 *
 	 */
@@ -152,7 +158,7 @@ public class Photo extends DataObject {
 
 		incWriteCount();
 	}
-	
+
 	/**
 	 * @methodtype get
 	 */

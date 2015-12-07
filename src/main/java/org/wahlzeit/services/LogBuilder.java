@@ -3,9 +3,11 @@ package org.wahlzeit.services;
 import org.wahlzeit.model.Client;
 import org.wahlzeit.model.UserManager;
 import org.wahlzeit.model.UserSession;
+import org.wahlzeit.utils.Pattern;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
 
 /**
  * Builder class for log messages, that ensures that log messages are all formatted equally.
@@ -14,9 +16,16 @@ import java.io.StringWriter;
  * <code>Formatter</code> could not be used
  *
  * (see https://stackoverflow.com/questions/30345665/how-to-customize-logging-for-google-app-engine-java).
- * 
+ *
  * @review
  */
+@Pattern(name="Builder",
+  paricipants={
+ 	"Director", //Every Class that needs a log-file or wants to genereate messages for log-files.
+ 	"Builder", //LogBuilder
+	"ConcreteBuilder", // this
+	"Product" //Log-File or messages
+})
 public class LogBuilder {
 
 	protected static final String LEVEL = "level";

@@ -1,7 +1,7 @@
 /**
  * CoordinateManager.java
  *
- * Version: 
+ * Version:
  *
  * 16.11.2015
  *
@@ -12,19 +12,20 @@ package org.wahlzeit.model;
 
 /**
  * CoordinateManager.java
- * 
+ *
  * Version: 0.1
- * 
+ *
  * 16.11.2015
- * 
+ *
  * Copyright by danielmaclaughlin
- * 
+ *
  * The CoordinateManager instance cares of all types of coordinates and serves
  * methods for creating converting and comparing between the different types of
  * coordinates. Every coordinate type class has to serve a function for
  * computing distance between two coordinates of its type. the rest is done
  * here.
  */
+
 public class CoordinateManager implements Coordinate {
     /**
      * A coordinate can has CoordinateType.SPHERIC or CoordinateType.CARTESIAN.
@@ -65,7 +66,7 @@ public class CoordinateManager implements Coordinate {
     /**
      * Two coordinates are equal as long as their distance is smaller than
      * EQUALITYEPSILON
-     * 
+     *
      * @param one
      * @param two
      * @return
@@ -79,7 +80,7 @@ public class CoordinateManager implements Coordinate {
 
     /**
      * returns the distance between two coordinates
-     * 
+     *
      * @param one
      * @param two
      * @return
@@ -107,7 +108,7 @@ public class CoordinateManager implements Coordinate {
 
     /**
      * Calculate Distance between two coordinates of same types
-     * 
+     *
      * @param one
      * @param two
      * @return the distance of two coordinates of the same type.
@@ -119,7 +120,7 @@ public class CoordinateManager implements Coordinate {
 
     /**
      * Calculate Distance between two coordinates of different types
-     * 
+     *
      * @param one
      * @param two
      * @return the distance of two coordinates of different types

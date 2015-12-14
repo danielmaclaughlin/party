@@ -10,6 +10,8 @@
 
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+
 /**
  * CoordinateManager.java
  *
@@ -38,6 +40,8 @@ public class CoordinateManager implements Coordinate {
 
     private final double EQUALITYEPSILON = 0.01;
 
+    static HashMap<Integer, Coordinate> coordinateInstances = new HashMap<Integer, Coordinate>();
+
     protected static final CoordinateManager instance = new CoordinateManager();
 
     public static final CoordinateManager getInstance() {
@@ -53,14 +57,20 @@ public class CoordinateManager implements Coordinate {
      * @return new coordinate of the desired type
      */
     public Coordinate getNewCoordinate(CoordinateType type, double... args) {
+	Coordinate temp = null;
 	if (type == CoordinateType.SPHERIC) {
-	    return new SphericCoordinate(args[0], args[1]);
+	    temp = new SphericCoordinate(args[0], args[1]);
+
+	} else if (type == CoordinateType.CARTESIAN) {
+	    temp = new CartesianCoordinate(args[0], args[1], args[2]);
 	}
-	if (type == CoordinateType.CARTESIAN) {
-	    return new CartesianCoordinate(args[0], args[1], args[2]);
-	} else {
-	    return null;
+	synchronized (coordinateInstances) {
+	    if (coordinateInstances.containsKey(temp.hashCode())) {
+		temp = coordinateInstances.get(temp.hashCode());
+	    }
 	}
+	coordinateInstances.put(temp.hashCode(), temp);
+	return temp;
     }
 
     /**
@@ -154,6 +164,43 @@ public class CoordinateManager implements Coordinate {
 	}
 	// should never be reached
 	return null;
+    }
+
+    public int calculateHashCodeForCoordinate(Coordinate c) {
+	int result = 1;
+	int prime = 31;
+	long temp;
+	SphericCoordinate sc = null;
+	CartesianCoordinate cc = null;
+
+	/*
+	 * the coordinates are initialized properly as long as there are only
+	 * two Types of Coordinates.
+	 */
+
+	if (c.getCoordinateType() == CoordinateType.CARTESIAN) {
+	    sc = (SphericCoordinate) convertCoordinate(c, CoordinateType.SPHERIC);
+	    cc = (CartesianCoordinate) c;
+
+	}
+	if (c.getCoordinateType() == CoordinateType.SPHERIC) {
+	    sc = (SphericCoordinate) c;
+	    cc = (CartesianCoordinate) convertCoordinate(c, CoordinateType.CARTESIAN);
+	}
+
+	temp = Double.doubleToLongBits(sc.getLatitude());
+	result = prime * result + (int) (temp ^ (temp >>> 32));
+	temp = Double.doubleToLongBits(sc.getLongitude());
+	result = prime * result + (int) (temp ^ (temp >>> 32));
+	temp = Double.doubleToLongBits(sc.getRadius());
+	result = prime * result + (int) (temp ^ (temp >>> 32));
+	temp = Double.doubleToLongBits(cc.getX());
+	result = prime * result + (int) (temp ^ (temp >>> 32));
+	temp = Double.doubleToLongBits(cc.getY());
+	result = prime * result + (int) (temp ^ (temp >>> 32));
+	temp = Double.doubleToLongBits(cc.getZ());
+	result = prime * result + (int) (temp ^ (temp >>> 32));
+	return result;
     }
 
     /**

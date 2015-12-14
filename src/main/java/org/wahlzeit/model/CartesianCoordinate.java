@@ -10,9 +10,16 @@
 
 package org.wahlzeit.model;
 
+import java.io.Serializable;
+
 import org.wahlzeit.model.CoordinateManager.CoordinateType;
 
-public class CartesianCoordinate extends AbstractCoordinate {
+public class CartesianCoordinate extends AbstractCoordinate implements Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1973018372329860096L;
+    
     private final CoordinateType type = CoordinateType.CARTESIAN;
     private double x;
     private double y;
@@ -49,7 +56,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @param x
      *            the x to set
      */
-    public void setX(double x) {
+    private void setX(double x) {
 	this.x = x;
     }
 
@@ -57,7 +64,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @param y
      *            the y to set
      */
-    public void setY(double y) {
+    private void setY(double y) {
 	this.y = y;
     }
 
@@ -65,7 +72,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @param z
      *            the z to set
      */
-    public void setZ(double z) {
+    private void setZ(double z) {
 	this.z = z;
     }
 
@@ -113,17 +120,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
      */
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	long temp;
-	temp = Double.doubleToLongBits(x);
-	result = prime * result + (int) (temp ^ (temp >>> 32));
-	temp = Double.doubleToLongBits(y);
-	result = prime * result + (int) (temp ^ (temp >>> 32));
-	temp = Double.doubleToLongBits(z);
-	result = prime * result + (int) (temp ^ (temp >>> 32));
-	return result;
+	return CoordinateManager.getInstance().calculateHashCodeForCoordinate(this);
     }
+    
 
     /*
      * (non-Javadoc)

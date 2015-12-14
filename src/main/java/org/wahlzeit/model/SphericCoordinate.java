@@ -9,9 +9,17 @@
  */
 package org.wahlzeit.model;
 
+import java.io.Serializable;
+
 import org.wahlzeit.model.CoordinateManager.CoordinateType;
 
-public class SphericCoordinate extends AbstractCoordinate {
+public class SphericCoordinate extends AbstractCoordinate implements Serializable{
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7244110068435642350L;
+    
     private final CoordinateType type = CoordinateType.SPHERIC;
     private double latitude = Double.MIN_VALUE;
     private double longitude = Double.MIN_VALUE;
@@ -39,6 +47,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	this.latitude = latitude;
 	this.longitude = longitude;
     }
+    
 
     /**
      * @return the CoordinateType
@@ -101,7 +110,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      *             if latitude is lower than -90.0d, greater than 90.0d, or
      *             equals Double.NaN
      */
-    public void setLatitude(double latitude) throws IllegalArgumentException {
+    private void setLatitude(double latitude) throws IllegalArgumentException {
 	if (latitude < -90.0 || latitude > 90.0) {
 	    throw new IllegalArgumentException("The given value for latitude is out of range [-90.0;+90.0]");
 	}
@@ -118,7 +127,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      *             if longitude is lower than -180.0d, greater than 180.0d, or
      *             equals Double.NaN
      */
-    public void setLongitude(double longitude) throws IllegalArgumentException {
+    private void setLongitude(double longitude) throws IllegalArgumentException {
 	if (longitude < -180.0 || longitude > 180.0) {
 	    throw new IllegalArgumentException("The given value for longitude is out of range [-180.0;+180.0]");
 	}
@@ -135,7 +144,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @throws IllegalArgumentException
      *             the radius may not be negative
      */
-    public void setRadius(double radius) {
+    private void setRadius(double radius) {
 	if (radius > 0) {
 	    this.radius = radius;
 	} else {
@@ -154,18 +163,16 @@ public class SphericCoordinate extends AbstractCoordinate {
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
+    public int myHashCode() {
+	return hashCode();
+    }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	long temp;
-	temp = Double.doubleToLongBits(latitude);
-	result = prime * result + (int) (temp ^ (temp >>> 32));
-	temp = Double.doubleToLongBits(longitude);
-	result = prime * result + (int) (temp ^ (temp >>> 32));
-	temp = Double.doubleToLongBits(radius);
-	result = prime * result + (int) (temp ^ (temp >>> 32));
-	return result;
+	return CoordinateManager.getInstance().calculateHashCodeForCoordinate(this);
     }
 
     /* (non-Javadoc)

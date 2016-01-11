@@ -16,7 +16,31 @@ package org.wahlzeit.model;
  */
 @SuppressWarnings("serial")
 public class PartyPhoto extends Photo {
-	PartyPhoto(){
+	
+	private Party party;
+	
+	/**
+	 * @methodtype constructor
+	 */
+	public PartyPhoto(){
 		super();
 	}
+
+	/**
+	 * @methodtype get
+	 */
+	public Party getParty() {
+		return party;
+	}
+
+	/**
+	 * @methodtype set
+	 */
+	public void setParty(Party party) {
+		this.party = party;
+	}
+	
+	
+	
+	
 }
